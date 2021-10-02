@@ -40,7 +40,7 @@ public class SunGravity : MonoBehaviour
 
     void ApplyForce()
     {
-        if (distance < 7.0) {
+        if (distance < 70.0) {
             forceDirection = (centerOfTheSun.position - transform.position).normalized;
             rb.AddForce(force * forceDirection);
         }
