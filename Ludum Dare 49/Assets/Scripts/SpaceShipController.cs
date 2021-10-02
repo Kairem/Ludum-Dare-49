@@ -20,10 +20,13 @@ public class SpaceShipController : MonoBehaviour {
 	bool isHarpoonCooldown = false;
 	public GameObject tetherPrefab;
 	GameObject tether;
+	DistanceJoint2D tetherJoint;
 
 	private void Awake() {
 		rb = GetComponent<Rigidbody2D>();
 		rb.drag = 1.5f;
+
+		tetherJoint = gameObject.GetComponent<DistanceJoint2D>();
 	}
 
 	// Update is called once per frame
@@ -48,10 +51,15 @@ public class SpaceShipController : MonoBehaviour {
 
 	void fireHarpoon() {
 		tether = Instantiate(tetherPrefab, gameObject.transform);
-		tether.transform.Find("Link").GetComponent<HingeJoint2D>().connectedBody = gameObject.GetComponent<Rigidbody2D>();
+		//tether.transform.Find("Link").GetComponent<HingeJoint2D>().connectedBody = gameObject.GetComponent<Rigidbody2D>();
+		Tether tetherComponent = tether.GetComponent<Tether>();
+		tetherComponent.anchor1 = gameObject.transform;
+		tetherComponent.anchor2 = tether.transform;
+		tetherComponent.enabled = true;
 	}
 
 	void retractHarpoon() {
+		tetherJoint.enabled = false;
 		Destroy(tether);
 	}
 
