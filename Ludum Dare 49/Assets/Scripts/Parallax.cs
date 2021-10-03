@@ -7,10 +7,10 @@ public class Parallax : MonoBehaviour {
 	public GameObject[] layers;
 	public float parallaxSpeed = 1f;
 	//Boundary
-	private float minX = -50;
-	private float maxX = 50;
-	private float minY = -50;
-	private float maxY = 50;
+	private float minX = -500;
+	private float maxX = 500;
+	private float minY = -500;
+	private float maxY = 500;
 
 	// Start is called before the first frame update
 	void Start() {

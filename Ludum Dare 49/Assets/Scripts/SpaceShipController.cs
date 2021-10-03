@@ -8,12 +8,16 @@ public class SpaceShipController : MonoBehaviour {
 	public float force = 20.0f;
 	public ParticleSystem emitter1;
 	public ParticleSystem emitter2;
+	public GameObject deathPanel;
 	Rigidbody2D rb;
+	public EditHearts uiHearts;
 
 	private bool isThrusting;
 	private float turnDirection;
 
 	public int hearts = 3;
+	bool isAlive = true;
+
 	/// Harpoon Variables ///
 	enum HarpoonState {
 		Ready,
@@ -43,9 +47,6 @@ public class SpaceShipController : MonoBehaviour {
 			emitter1.Stop();
 			emitter2.Stop();
 		}
-		if (hearts <= 0) {
-			print("You died! AHAHAHAHAHHAHA You got rolled by the sun");
-        }
 	}
 		
 	// physics calculations
@@ -119,5 +120,13 @@ public class SpaceShipController : MonoBehaviour {
 
 	public void TakeDamage(int damage) {
 		hearts -= damage;
-    }
+		uiHearts.UpdateGraphic(hearts);
+		if (hearts <= 0 && isAlive == true) {
+			isAlive = false;
+			if (deathPanel != null)
+            {
+				deathPanel.SetActive(true);
+            }
+		}
+	}
 }
