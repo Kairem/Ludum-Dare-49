@@ -5,6 +5,7 @@ using UnityEngine;
 public class LaserBeam : MonoBehaviour {
 
 	public float bulletSpeed = 10f;
+	public int damage = 1;
 
 	Rigidbody2D rb;
 	void Start() {
@@ -23,6 +24,7 @@ public class LaserBeam : MonoBehaviour {
 		print(hitGO);
 		if (hitGO.GetComponent<SpaceShipController>()) {
 			print("Laser Hit: 1 Damage");
+			hitGO.GetComponent<SpaceShipController>().TakeDamage(1);
 		}
 		Destroy(gameObject);
 	}

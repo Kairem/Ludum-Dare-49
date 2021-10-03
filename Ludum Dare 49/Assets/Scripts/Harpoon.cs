@@ -43,6 +43,11 @@ public class Harpoon : MonoBehaviour {
 
 			joint.enableCollision = true;
 			joint.enabled = true;
+
+			if (go.GetComponent<HabitedPlanet>()) {
+				go.GetComponent<HabitedPlanet>().DispatchSoldiers(transform.parent.gameObject);
+			}
+
 		} else if (go.GetComponent<EnemyController>()) {
 			go.GetComponent<EnemyController>().Die();
 		}
