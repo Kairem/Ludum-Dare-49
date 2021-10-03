@@ -9,6 +9,7 @@ public class SunGravity : MonoBehaviour
     public float massOfSun = 3000;
     public float gravityConstant = 1;
     List<Collider2D> listOfObjects;
+    public GameObject warningDisplay;
 
     private void Start()
     {
@@ -16,10 +17,34 @@ public class SunGravity : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other)
-    {
+    {   
         if (other.GetComponent<Rigidbody2D>()) {
             listOfObjects.Add(other);
         }
+        if (other.GetComponent<SpaceShipController>())
+        {
+            //Display warning
+            if (warningDisplay != null)
+            {
+                GetComponent<AudioSource>().Play();
+                warningDisplay.SetActive(true);
+            }
+            //set timer
+            StartCoroutine(Countdown());
+        }
+    }
+
+    private IEnumerator Countdown()
+    {
+        float duration = 3f;
+        float normalizedTime = 0;
+        while (normalizedTime <= 1f)
+        {
+            // if leave early exit early.
+            normalizedTime += Time.deltaTime / duration;
+            yield return null;
+        }
+        warningDisplay.SetActive(false);
     }
 
     private void OnTriggerExit2D(Collider2D other)

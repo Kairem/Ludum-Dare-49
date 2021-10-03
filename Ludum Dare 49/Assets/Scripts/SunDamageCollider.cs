@@ -13,6 +13,7 @@ public class SunDamageCollider : MonoBehaviour
 			//Display thingy
 			if (warningDisplay != null)
 			{
+				GetComponent<AudioSource>().Play();
 				warningDisplay.SetActive(true);
 			}
 			takeDamage = true;
