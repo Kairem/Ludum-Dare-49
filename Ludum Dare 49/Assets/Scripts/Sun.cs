@@ -37,6 +37,7 @@ public class Sun : MonoBehaviour {
 		}
 		// Updates visuals
 		fuelBar.UpdateFuelBar(currentFuel);
+
 	}
 
 	void sunDeath() {
