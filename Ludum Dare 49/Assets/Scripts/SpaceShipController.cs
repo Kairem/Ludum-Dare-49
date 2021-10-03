@@ -12,6 +12,7 @@ public class SpaceShipController : MonoBehaviour {
 	Rigidbody2D rb;
 	public EditHearts uiHearts;
 
+
 	private bool isThrusting;
 	private float turnDirection;
 
@@ -120,7 +121,14 @@ public class SpaceShipController : MonoBehaviour {
 
 	public void TakeDamage(int damage) {
 		hearts -= damage;
+		//Update UI hearts
 		uiHearts.UpdateGraphic(hearts);
+		//Play hit sound
+		if (isAlive == true)
+        {
+			GetComponent<AudioSource>().Play();
+		}
+		//Check if dead
 		if (hearts <= 0 && isAlive == true) {
 			isAlive = false;
 			if (deathPanel != null)
