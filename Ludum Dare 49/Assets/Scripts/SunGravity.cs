@@ -1,49 +1,59 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SunGravity : MonoBehaviour
 {
-    //Force of gravity = m1 * m2
-    //                   -------
-    //                     d^2
-    public float massOfSun;
-    public Transform centerOfTheSun;
-    public float massOfPlayer;
-    public float gravityConstant;
-    float force;
-    float distance;
-    Vector3 forceDirection;
+    public CircleCollider2D cc;
+    public float massOfSun = 3000;
+    public float gravityConstant = 1;
+    List<Collider2D> listOfObjects;
 
-    Rigidbody2D rb;
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        massOfPlayer = rb.mass;
+        listOfObjects = new List<Collider2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        
+        if (other.GetComponent<Rigidbody2D>()) {
+            listOfObjects.Add(other);
+            print(listOfObjects);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        for (var i = 0; i < listOfObjects.Count; i++)
+        {
+            if (listOfObjects[i] == other) {
+                listOfObjects.RemoveAt(i);
+                print(listOfObjects);
+            }
+        }
     }
 
     private void FixedUpdate()
     {
-        distance = Vector3.Distance(centerOfTheSun.transform.position, transform.position);
-        print("Distance: " + distance);
-        force = gravityConstant * (massOfSun * massOfPlayer) / (distance * distance);
-        print("Force: " + force);
-        ApplyForce();
-    }
-
-    void ApplyForce()
-    {
-        if (distance < 70.0) {
-            forceDirection = (centerOfTheSun.position - transform.position).normalized;
-            rb.AddForce(force * forceDirection);
+       
+        foreach (Collider2D obj in listOfObjects) {
+            ApplyForce(obj);
         }
         
+    }
+
+    void ApplyForce(Collider2D obj)
+    {
+        Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
+        float massOfObject = rb.mass;
+        float distance;
+        float force;
+        Vector3 forceDirection;
+
+        distance = Vector3.Distance(transform.position, obj.transform.position);
+        force = gravityConstant * (massOfSun * massOfObject) / (distance * distance);
+        forceDirection = (transform.position - obj.transform.position).normalized;
+        rb.AddForce(force * forceDirection);
     }
 }

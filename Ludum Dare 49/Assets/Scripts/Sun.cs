@@ -9,12 +9,14 @@ public class Sun : MonoBehaviour {
 
 	public float stabilityThreshold = 1000f;
 	public float currentFuel = 3000f;
+	public FuelBar fuelBar;
 
-	void Update() {
+    void Update() {
 		currentFuel -= burnRate * Time.deltaTime;
 		if (currentFuel < stabilityThreshold) {
 			sunDeath();
 		}
+		fuelBar.UpdateFuelBar(currentFuel);
 	}
 
 	void sunDeath() {
