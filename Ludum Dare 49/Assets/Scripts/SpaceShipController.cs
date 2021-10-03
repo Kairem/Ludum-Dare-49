@@ -13,6 +13,7 @@ public class SpaceShipController : MonoBehaviour {
 	private bool isThrusting;
 	private float turnDirection;
 
+	public int hearts = 3;
 	/// Harpoon Variables ///
 	enum HarpoonState {
 		Ready,
@@ -42,8 +43,11 @@ public class SpaceShipController : MonoBehaviour {
 			emitter1.Stop();
 			emitter2.Stop();
 		}
+		if (hearts <= 0) {
+			print("You died! AHAHAHAHAHHAHA You got rolled by the sun");
+        }
 	}
-
+		
 	// physics calculations
 	private void FixedUpdate() {
 		Move();
@@ -112,4 +116,8 @@ public class SpaceShipController : MonoBehaviour {
 			rb.angularVelocity = 0;
 		}
 	}
+
+	public void TakeDamage(int damage) {
+		hearts -= damage;
+    }
 }

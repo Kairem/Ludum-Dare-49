@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SunGravity : MonoBehaviour
 {
-    public CircleCollider2D cc;
+    public CircleCollider2D gravityCollider;
     public float massOfSun = 3000;
     public float gravityConstant = 1;
     List<Collider2D> listOfObjects;
@@ -19,7 +19,6 @@ public class SunGravity : MonoBehaviour
     {
         if (other.GetComponent<Rigidbody2D>()) {
             listOfObjects.Add(other);
-            print(listOfObjects);
         }
     }
 
@@ -29,14 +28,12 @@ public class SunGravity : MonoBehaviour
         {
             if (listOfObjects[i] == other) {
                 listOfObjects.RemoveAt(i);
-                print(listOfObjects);
             }
         }
     }
 
     private void FixedUpdate()
     {
-       
         foreach (Collider2D obj in listOfObjects) {
             ApplyForce(obj);
         }

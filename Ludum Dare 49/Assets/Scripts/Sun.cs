@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Sun : MonoBehaviour {
-	public float mass = 30000f;
 	public float sinkSpeed = 1f;
 	public float burnRate = 10f;
-
 	public float stabilityThreshold = 1000f;
 	public float currentFuel = 3000f;
 	public FuelBar fuelBar;
 
-    void Update() {
+	void Update() {
 		currentFuel -= burnRate * Time.deltaTime;
 		if (currentFuel < stabilityThreshold) {
 			sunDeath();
@@ -24,6 +22,9 @@ public class Sun : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D hit) {
+		if (hit.gameObject.GetComponent<SpaceShipController>()) {
+			hit.gameObject.GetComponent<SpaceShipController>().TakeDamage(3);
+		}
 		GameObject hitGO = hit.gameObject;
 		FuelObject fo = hit.gameObject.GetComponent<FuelObject>();
 
