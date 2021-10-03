@@ -17,8 +17,9 @@ public class SunGravity : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other)
-    {   
-        if (other.GetComponent<Rigidbody2D>()) {
+    {
+        if (other.GetComponent<Rigidbody2D>())
+        {
             listOfObjects.Add(other);
         }
         if (other.GetComponent<SpaceShipController>())
@@ -51,7 +52,8 @@ public class SunGravity : MonoBehaviour
     {
         for (var i = 0; i < listOfObjects.Count; i++)
         {
-            if (listOfObjects[i] == other) {
+            if (listOfObjects[i] == other)
+            {
                 listOfObjects.RemoveAt(i);
             }
         }
@@ -59,10 +61,11 @@ public class SunGravity : MonoBehaviour
 
     private void FixedUpdate()
     {
-        foreach (Collider2D obj in listOfObjects) {
+        listOfObjects.RemoveAll(obj => obj == null);
+        foreach (Collider2D obj in listOfObjects)
+        {
             ApplyForce(obj);
         }
-        
     }
 
     void ApplyForce(Collider2D obj)
@@ -77,5 +80,11 @@ public class SunGravity : MonoBehaviour
         force = gravityConstant * (massOfSun * massOfObject) / (distance * distance);
         forceDirection = (transform.position - obj.transform.position).normalized;
         rb.AddForce(force * forceDirection);
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, GetComponent<CircleCollider2D>().radius);
     }
 }
