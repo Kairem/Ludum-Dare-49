@@ -22,6 +22,7 @@ public class Harpoon : MonoBehaviour {
 		}
 	}
 	void OnTriggerEnter2D(Collider2D hit) {
+		if (hasHit) return;
 		rb.velocity = Vector2.zero;
 		print(hit.gameObject);
 		GameObject go = hit.gameObject;

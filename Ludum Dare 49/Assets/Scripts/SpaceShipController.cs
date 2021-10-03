@@ -6,7 +6,9 @@ public class SpaceShipController : MonoBehaviour {
 	// Initial Variables
 	public float rotationDegreePerSec = 180f;
 	public float force = 20.0f;
-	public Rigidbody2D rb;
+	public ParticleSystem emitter1;
+	public ParticleSystem emitter2;
+	Rigidbody2D rb;
 
 	private bool isThrusting;
 	private float turnDirection;
@@ -32,6 +34,14 @@ public class SpaceShipController : MonoBehaviour {
 	// Update is called once per frame
 	void Update() {
 		ProcessInputs();
+
+		if (isThrusting) {
+			emitter1.Play();
+			emitter2.Play();
+		} else {
+			emitter1.Stop();
+			emitter2.Stop();
+		}
 	}
 
 	// physics calculations
