@@ -48,7 +48,7 @@ public class SpaceShipController : MonoBehaviour {
 			emitter2.Stop();
 		}
 	}
-		
+
 	// physics calculations
 	private void FixedUpdate() {
 		Move();
@@ -87,12 +87,12 @@ public class SpaceShipController : MonoBehaviour {
 			print("FIREEEEEE");
 			fireHarpoon();
 			isHarpoonCooldown = true;
-			StartCoroutine(setCooldown(1f));
+			StartCoroutine(setCooldown(.0f));
 		} else if (hState == HarpoonState.Out) {
 			print("Retracting");
 			retractHarpoon();
 			isHarpoonCooldown = true;
-			StartCoroutine(setCooldown(1f));
+			StartCoroutine(setCooldown(.0f));
 		}
 	}
 
@@ -123,10 +123,9 @@ public class SpaceShipController : MonoBehaviour {
 		uiHearts.UpdateGraphic(hearts);
 		if (hearts <= 0 && isAlive == true) {
 			isAlive = false;
-			if (deathPanel != null)
-            {
+			if (deathPanel != null) {
 				deathPanel.SetActive(true);
-            }
+			}
 		}
 	}
 }

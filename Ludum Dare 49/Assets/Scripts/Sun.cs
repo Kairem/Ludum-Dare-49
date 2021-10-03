@@ -14,7 +14,7 @@ public class Sun : MonoBehaviour {
 		if (currentFuel < stabilityThreshold) {
 			sunDeath();
 		}
-		fuelBar.UpdateFuelBar(currentFuel);
+		//fuelBar.UpdateFuelBar(currentFuel);
 	}
 
 	void sunDeath() {

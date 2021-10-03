@@ -16,19 +16,19 @@ public class Harpoon : MonoBehaviour {
 	void Update() {
 		if (!hasHit) {
 			if ((transform.parent.position - transform.position).magnitude > maxDistance) {
-				//Destroy(gameObject);
-				rb.velocity = Vector2.zero;
+				Destroy(gameObject);
+				//rb.velocity = Vector2.zero;
 			}
 		}
 	}
 	void OnTriggerEnter2D(Collider2D hit) {
 		if (hasHit) return;
-		rb.velocity = Vector2.zero;
-		print(hit.gameObject);
 		GameObject go = hit.gameObject;
-		print("HIT");
+
+
 		if (go.GetComponent<FuelObject>()) {
 			hasHit = true;
+			rb.velocity = Vector2.zero;
 			Rigidbody2D hitRB = hit.gameObject.GetComponent<Rigidbody2D>();
 			DistanceJoint2D joint = transform.parent.gameObject.GetComponent<DistanceJoint2D>();
 			joint.autoConfigureConnectedAnchor = true;
@@ -43,6 +43,8 @@ public class Harpoon : MonoBehaviour {
 
 			joint.enableCollision = true;
 			joint.enabled = true;
+		} else if (go.GetComponent<EnemyController>()) {
+			go.GetComponent<EnemyController>().Die();
 		}
 	}
 }
