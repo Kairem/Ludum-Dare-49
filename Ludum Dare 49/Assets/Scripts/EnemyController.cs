@@ -31,13 +31,14 @@ public class EnemyController : MonoBehaviour {
 
 	void Shoot() {
 		if (islaserCoooldown) return;
+		print("SHOOTING LASER");
+		islaserCoooldown = true;
+		GameObject projectile = Instantiate(projectilePrefab, transform);
+		projectile.transform.up = target.position - projectile.transform.position;
 		StartCoroutine(LaserAttack());
 	}
 
 	IEnumerator LaserAttack() {
-		islaserCoooldown = true;
-		GameObject projectile = Instantiate(projectilePrefab, transform);
-		projectile.transform.up = target.position - projectile.transform.position;
 		yield return new WaitForSeconds(1 / rateOfFire);
 		islaserCoooldown = false;
 	}
