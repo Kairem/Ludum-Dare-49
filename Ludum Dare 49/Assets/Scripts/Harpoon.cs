@@ -13,6 +13,7 @@ public class Harpoon : MonoBehaviour {
 		rb = gameObject.GetComponent<Rigidbody2D>();
 		// rb.AddForce(new Vector2(0, barbForce), ForceMode2D.Impulse);
 		rb.velocity = gameObject.transform.up * harpoonSpeed;
+		musicManager = GameObject.Find("MusicManager").GetComponent<MusicManager>();
 	}
 
 	void Update() {
@@ -57,7 +58,7 @@ public class Harpoon : MonoBehaviour {
 
 			if (go.GetComponent<HabitedPlanet>()) {
 				go.GetComponent<HabitedPlanet>().DispatchSoldiers(transform.parent.gameObject);
-				musicManager.PlayDeathSoundtrack();
+				musicManager.PlayBattleSoundtrack();
 			}
 
 		} else if (go.GetComponent<EnemyController>()) {

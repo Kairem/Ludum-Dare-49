@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class SpaceShipController : MonoBehaviour {
 	//########## PUBLIC SETTINGS #######################
 	public float rotationDegreePerSec = 180f;
@@ -17,6 +17,7 @@ public class SpaceShipController : MonoBehaviour {
 	//########## GUI CONNECTIONS #######################
 	public GameObject deathPanel;
 	public EditHearts uiHearts;
+	public GameObject dayCounterPanel;
 
 	//########## SOUNDS ################################
 	public AudioClip harpoonSound;
@@ -154,6 +155,8 @@ public class SpaceShipController : MonoBehaviour {
 			isAlive = false;
 			if (deathPanel != null) {
 				musicManager.PlayDeathSoundtrack();
+				int day = dayCounterPanel.GetComponent<ChangeText>().day;
+				deathPanel.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = "You prolonged the sun for " + day + " months.";
 				deathPanel.SetActive(true);
 			}
 			Die();

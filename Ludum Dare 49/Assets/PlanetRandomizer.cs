@@ -54,7 +54,7 @@ public class PlanetRandomizer : MonoBehaviour {
 			planetGO.transform.localScale = new Vector3(size, size, 1);
 			planetGO.GetComponent<SpriteRenderer>().color = Color.HSVToRGB(hue / 360f, .5f, 1);
 			planetPosList.Add(planetGO.transform.position);
-			HabitedPlanet hp = GetComponent<HabitedPlanet>();
+			HabitedPlanet hp = planetGO.GetComponent<HabitedPlanet>();
 			if (hp) {
 				hp.numSoldiers = Random.Range(4, 9);
 				planetGO.GetComponent<SpriteRenderer>().color = Color.HSVToRGB(hue / 360f, .2f, 1);
