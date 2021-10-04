@@ -13,6 +13,7 @@ public class SpaceShipController : MonoBehaviour {
 	public EditHearts uiHearts;
 	public AudioClip harpoonSound;
 	public AudioClip takeDamageSound;
+	public MusicManager musicManager;
 
 	private bool isThrusting;
 	private float turnDirection;
@@ -38,6 +39,9 @@ public class SpaceShipController : MonoBehaviour {
 		tetherJoint = gameObject.GetComponent<DistanceJoint2D>();
 	}
 
+    private void Start() {
+		musicManager.PlayOriginalSoundtrack();
+	}
 	// Update is called once per frame
 	void Update() {
 		ProcessInputs();
@@ -136,6 +140,7 @@ public class SpaceShipController : MonoBehaviour {
 		if (hearts <= 0 && isAlive == true) {
 			isAlive = false;
 			if (deathPanel != null) {
+				musicManager.PlayDeathSoundtrack();
 				deathPanel.SetActive(true);
 			}
 		}

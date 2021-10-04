@@ -7,6 +7,8 @@ public class Harpoon : MonoBehaviour {
 	public float maxDistance = 10;
 	Rigidbody2D rb;
 	bool hasHit = false;
+	public MusicManager musicManager;
+
 	void Start() {
 		rb = gameObject.GetComponent<Rigidbody2D>();
 		// rb.AddForce(new Vector2(0, barbForce), ForceMode2D.Impulse);
@@ -46,6 +48,7 @@ public class Harpoon : MonoBehaviour {
 
 			if (go.GetComponent<HabitedPlanet>()) {
 				go.GetComponent<HabitedPlanet>().DispatchSoldiers(transform.parent.gameObject);
+				musicManager.PlayDeathSoundtrack();
 			}
 
 		} else if (go.GetComponent<EnemyController>()) {
