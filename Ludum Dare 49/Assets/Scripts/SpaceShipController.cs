@@ -11,7 +11,8 @@ public class SpaceShipController : MonoBehaviour {
 	public GameObject deathPanel;
 	Rigidbody2D rb;
 	public EditHearts uiHearts;
-
+	public AudioClip harpoonSound;
+	public AudioClip takeDamageSound;
 
 	private bool isThrusting;
 	private float turnDirection;
@@ -66,6 +67,8 @@ public class SpaceShipController : MonoBehaviour {
 	}
 
 	void fireHarpoon() {
+		GetComponent<AudioSource>().volume = 0.1f;
+		GetComponent<AudioSource>().PlayOneShot(harpoonSound);
 		tether = Instantiate(tetherPrefab, gameObject.transform);
 		//tether.transform.Find("Link").GetComponent<HingeJoint2D>().connectedBody = gameObject.GetComponent<Rigidbody2D>();
 		Tether tetherComponent = tether.GetComponent<Tether>();
@@ -126,7 +129,8 @@ public class SpaceShipController : MonoBehaviour {
 		//Play hit sound
 		if (isAlive == true)
         {
-			GetComponent<AudioSource>().Play();
+			GetComponent<AudioSource>().volume = 0.8f;
+			GetComponent<AudioSource>().PlayOneShot(takeDamageSound);
 		}
 		//Check if dead
 		if (hearts <= 0 && isAlive == true) {
