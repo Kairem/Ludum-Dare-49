@@ -3,25 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SpaceShipController : MonoBehaviour {
-	// Initial Variables
+	//########## PUBLIC SETTINGS #######################
 	public float rotationDegreePerSec = 180f;
 	public float force = 20.0f;
+
+	//########## PARTICLE CONNECTIONS ##################
 	public ParticleSystem emitter1;
 	public ParticleSystem emitter2;
+
+	//########## PREFAB CONNECTIONS ####################
+	public GameObject explosionPrefab;
+
+	//########## GUI CONNECTIONS #######################
 	public GameObject deathPanel;
-	Rigidbody2D rb;
 	public EditHearts uiHearts;
+
+	//########## SOUNDS ################################
 	public AudioClip harpoonSound;
 	public AudioClip takeDamageSound;
 	public MusicManager musicManager;
 
-	private bool isThrusting;
-	private float turnDirection;
+	//########## PRIVATE DECLARATIONS ##################
+	bool isThrusting;
+	float turnDirection;
 
 	public int hearts = 3;
 	bool isAlive = true;
+	Rigidbody2D rb;
 
-	/// Harpoon Variables ///
+	//########## HARPOON STUFF ###########################
 	enum HarpoonState {
 		Ready,
 		Out
@@ -32,6 +42,8 @@ public class SpaceShipController : MonoBehaviour {
 	GameObject tether;
 	DistanceJoint2D tetherJoint;
 
+	//########## UNITY FUNCTIONS #########################
+
 	private void Awake() {
 		rb = GetComponent<Rigidbody2D>();
 		rb.drag = 1.5f;
@@ -39,7 +51,7 @@ public class SpaceShipController : MonoBehaviour {
 		tetherJoint = gameObject.GetComponent<DistanceJoint2D>();
 	}
 
-    private void Start() {
+	private void Start() {
 		musicManager.PlayOriginalSoundtrack();
 	}
 	// Update is called once per frame
@@ -59,6 +71,8 @@ public class SpaceShipController : MonoBehaviour {
 	private void FixedUpdate() {
 		Move();
 	}
+
+	//########## OUR DEFINED FUNCTIONS ##################
 
 	IEnumerator setCooldown(float seconds) {
 		yield return new WaitForSeconds(seconds);
@@ -131,8 +145,7 @@ public class SpaceShipController : MonoBehaviour {
 		//Update UI hearts
 		uiHearts.UpdateGraphic(hearts);
 		//Play hit sound
-		if (isAlive == true)
-        {
+		if (isAlive == true) {
 			GetComponent<AudioSource>().volume = 0.8f;
 			GetComponent<AudioSource>().PlayOneShot(takeDamageSound);
 		}
@@ -143,6 +156,13 @@ public class SpaceShipController : MonoBehaviour {
 				musicManager.PlayDeathSoundtrack();
 				deathPanel.SetActive(true);
 			}
+			Die();
 		}
+	}
+
+	public void Die() {
+		print(gameObject.name + " was killed.");
+		Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+		Destroy(gameObject);
 	}
 }

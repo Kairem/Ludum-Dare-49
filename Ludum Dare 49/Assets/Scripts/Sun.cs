@@ -23,6 +23,7 @@ public class Sun : MonoBehaviour {
 	void Start() {
 		ps = GetComponent<ParticleSystem>();
 		sr = GetComponent<SpriteRenderer>();
+		fuelBar.slider.maxValue = maxFuel;
 	}
 
 	void Update() {
@@ -61,6 +62,7 @@ public class Sun : MonoBehaviour {
 	void sunDeath() {
 		print("The sun ran out of fuel");
 		isDead = true;
+		ps.Stop();
 		IEnumerator sunExplosion() {
 			while (gameObject.transform.localScale.x > .1) {
 				gameObject.transform.localScale -= new Vector3(explosionShrinkRate * Time.deltaTime, explosionShrinkRate * Time.deltaTime, 0);

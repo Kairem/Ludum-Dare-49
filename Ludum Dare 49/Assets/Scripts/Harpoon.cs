@@ -17,9 +17,18 @@ public class Harpoon : MonoBehaviour {
 
 	void Update() {
 		if (!hasHit) {
-			if ((transform.parent.position - transform.position).magnitude > maxDistance) {
-				Destroy(gameObject);
-				//rb.velocity = Vector2.zero;
+			if ((transform.parent.position - transform.position).magnitude >= maxDistance) {
+				rb.velocity = Vector2.zero;
+				GetComponent<Collider2D>().isTrigger = false;
+				hasHit = true;
+				DistanceJoint2D joint = transform.parent.gameObject.GetComponent<DistanceJoint2D>();
+				joint.autoConfigureConnectedAnchor = true;
+				joint.autoConfigureDistance = false;
+				joint.distance = maxDistance;
+				joint.connectedBody = rb;
+				joint.maxDistanceOnly = true;
+				joint.enableCollision = true;
+				joint.enabled = true;
 			}
 		}
 	}
