@@ -13,4 +13,9 @@ public class StateManager : MonoBehaviour
             SceneManager.LoadScene(name);
         }
     }
+
+    public void QuitGame() {
+        print("Quit Game!");
+        Application.Quit();
+    }
 }

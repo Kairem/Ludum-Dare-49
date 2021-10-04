@@ -32,6 +32,7 @@ public class EnemyController : MonoBehaviour {
 	void Shoot() {
 		if (islaserCoooldown) return;
 		print("SHOOTING LASER");
+		GetComponent<AudioSource>().Play();
 		islaserCoooldown = true;
 		GameObject projectile = Instantiate(projectilePrefab, transform);
 		projectile.transform.up = target.position - projectile.transform.position;
